@@ -1,5 +1,5 @@
 import Navigation from "@/components/Navigation/Navigation";
-import { AuroraBackground } from "@/components/UI/AuroraBackground";
+
 import { ClerkProvider } from "@clerk/nextjs";
 export default async function FunctionLayout({
   children,
