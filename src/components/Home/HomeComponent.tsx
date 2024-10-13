@@ -51,6 +51,8 @@ export default function HomeComponent() {
       groupName: "Housing Fund",
       participants: 10,
       percentageToGoal: 75,
+      image:
+        "https://th.bing.com/th/id/OIP.yD0rXTFB1XM0YI-adDXg2gAAAA?rs=1&pid=ImgDetMain",
     },
     {
       id: `education-${Date.now() + 1}`, // Increment timestamp for uniqueness
@@ -100,7 +102,7 @@ export default function HomeComponent() {
       </div>
       <p className="text-sm text-zinc-400">Your contribution groups</p>
       {contributionGroups.map((group) => (
-        <Link href={`/feature/${group.id}`}>
+        <Link href={`/feature/${group.groupName}`} key={group.id}>
           <ContributionPill data={group} key={group.id} />
         </Link>
       ))}

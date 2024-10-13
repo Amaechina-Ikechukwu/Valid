@@ -1,5 +1,13 @@
+import ContributionHeader from "@/components/UI/ContributionHeader";
+import { contributionGroups } from "@/lib/exampledata";
 import React from "react";
 
-export default function Page() {
-  return <div>Page</div>;
+export default function Page({ params }: { params: { id: string } }) {
+  return (
+    <div>
+      <ContributionHeader
+        data={contributionGroups[decodeURIComponent(params.id)]}
+      />
+    </div>
+  );
 }

@@ -9,10 +9,14 @@ export default function ContributionPill({
   return (
     <div className="flex p-2 rounded-lg bg-zinc-100 gap-4 items-center mb-3">
       {data.image ? (
-        <img src={data.image || ""} alt={data.groupName} />
+        <img
+          src={data.image || ""}
+          alt={data.groupName}
+          className="w-8 object-cover"
+        />
       ) : (
         <div className="avatar placeholder flex items-center justify-center">
-          <div className="bg-fuchsia-500 flex items-center justify-center text-white w-fit h-fit p-2  rounded-full">
+          <div className="bg-zinc-500 flex items-center justify-center text-white w-fit h-fit p-2  rounded-full">
             <span className="text-2xl text-end h-fit mt-2">
               {data.groupName[0]}
             </span>

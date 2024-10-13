@@ -15,7 +15,8 @@ export interface GroupDetails {
     name: string;
     email: string;
   };
-  adminWantsToWithdraw: boolean;
+  adminWithdrawal: boolean;
+  image?: string;
 }
 
 export interface Transaction {

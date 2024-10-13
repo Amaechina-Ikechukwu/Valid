@@ -15,7 +15,9 @@ const contributionGroups: ContributionGroups = {
       name: "John Doe",
       email: "john@example.com",
     },
-    adminWantsToWithdraw: false,
+    adminWithdrawal: false,
+    image:
+      "https://th.bing.com/th/id/OIP.yD0rXTFB1XM0YI-adDXg2gAAAA?rs=1&pid=ImgDetMain",
   },
   "Education Fund": {
     description: "A group dedicated to education-related expenses.",
@@ -27,7 +29,8 @@ const contributionGroups: ContributionGroups = {
       name: "Mike Johnson",
       email: "mike@example.com",
     },
-    adminWantsToWithdraw: true,
+    adminWithdrawal: true,
+    image: "",
   },
   "Vacation Fund": {
     description: "A group for saving towards a vacation trip.",
@@ -39,7 +42,8 @@ const contributionGroups: ContributionGroups = {
       name: "Alice Smith",
       email: "alice@example.com",
     },
-    adminWantsToWithdraw: true,
+    adminWithdrawal: true,
+    image: "",
   },
   "Emergency Fund": {
     description: "A group set up for emergency financial needs.",
@@ -55,7 +59,8 @@ const contributionGroups: ContributionGroups = {
       name: "Paul Walker",
       email: "paul@example.com",
     },
-    adminWantsToWithdraw: false,
+    adminWithdrawal: false,
+    image: "",
   },
 };
 const groupTransactions: GroupTransactions = {
