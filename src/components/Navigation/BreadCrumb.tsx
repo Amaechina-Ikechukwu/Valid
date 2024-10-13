@@ -8,13 +8,16 @@ export default function BreadCrumb() {
   const pathArray = pathname.split("/").filter(Boolean);
 
   return (
-    <div className="breadcrumbs max-w-xs text-sm">
-      <ul>
-        <li>
-          <Link href="/">HOME</Link>
-        </li>
+    <div className="breadcrumbs w-full max-w-xs text-sm break-words">
+      <ul className="flex flex-wrap space-x-2">
         {pathArray.map((path, index) => {
           const href = `/${pathArray.slice(0, index + 1).join("/")}`;
+          if (path.includes("-")) {
+            path = path.split("-")[0];
+          }
+          if (path == "feature") {
+            path = "home";
+          }
           return (
             <li key={path}>
               <Link href={href}>{path.toUpperCase()}</Link>
