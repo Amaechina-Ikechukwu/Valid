@@ -31,11 +31,13 @@ export default function ContributionPill({
           </p>
           <div
             className="radial-progress text-sm text-zinc-500"
-            style={{
-              "--value": data.percentageToGoal,
-              "--size": "2rem",
-              "--thickness": "2px",
-            }}
+            style={
+              {
+                "--value": data.percentageToGoal,
+                "--size": "2rem",
+                "--thickness": "2px",
+              } as React.CSSProperties
+            }
             role="progressbar"
           >
             {data.percentageToGoal}
