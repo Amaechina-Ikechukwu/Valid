@@ -48,7 +48,7 @@ export default function HomeComponent() {
   const contributionGroups: ContributionGroup[] = [
     {
       id: `housing-${Date.now()}`, // Custom ID
-      groupName: "Housing Fund",
+      name: "Housing Fund",
       participants: 10,
       percentageToGoal: 75,
       image:
@@ -56,19 +56,19 @@ export default function HomeComponent() {
     },
     {
       id: `education-${Date.now() + 1}`, // Increment timestamp for uniqueness
-      groupName: "Education Fund",
+      name: "Education Fund",
       participants: 20,
       percentageToGoal: 50,
     },
     {
       id: `vacation-${Date.now() + 2}`,
-      groupName: "Vacation Fund",
+      name: "Vacation Fund",
       participants: 8,
       percentageToGoal: 90,
     },
     {
       id: `emergency-${Date.now() + 3}`,
-      groupName: "Emergency Fund",
+      name: "Emergency Fund",
       participants: 15,
       percentageToGoal: 60,
     },
@@ -102,7 +102,7 @@ export default function HomeComponent() {
       </div>
       <p className="text-sm text-zinc-400">Your contribution groups</p>
       {contributionGroups.map((group) => (
-        <Link href={`/feature/${group.groupName}`} key={group.id}>
+        <Link href={`/feature/${group.name}`} key={group.id}>
           <ContributionPill data={group} key={group.id} />
         </Link>
       ))}

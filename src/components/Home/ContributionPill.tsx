@@ -11,20 +11,18 @@ export default function ContributionPill({
       {data.image ? (
         <img
           src={data.image || ""}
-          alt={data.groupName}
+          alt={data.name}
           className="w-8 object-cover"
         />
       ) : (
         <div className="avatar placeholder flex items-center justify-center">
           <div className="bg-zinc-500 flex items-center justify-center text-white w-fit h-fit p-2  rounded-full">
-            <span className="text-2xl text-end h-fit mt-2">
-              {data.groupName[0]}
-            </span>
+            <span className="text-2xl text-end h-fit mt-2">{data.name[0]}</span>
           </div>
         </div>
       )}
       <div className="w-full">
-        <h3 className="text-lg font-bold text-zinc-700">{data.groupName}</h3>
+        <h3 className="text-lg font-bold text-zinc-700">{data.name}</h3>
         <div className="flex justify-between items-center ">
           <p className="text-lg font-light text-zinc-500">
             {data.participants} paid

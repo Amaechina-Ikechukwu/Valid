@@ -1,20 +1,17 @@
 export interface ContributionGroup {
   id: string;
-  groupName: string;
+  name: string;
   participants: number;
   percentageToGoal: number;
   image?: string;
 }
 export interface GroupDetails {
   description: string;
-  groupName: string;
+  name: string;
   participantsEmails: string[];
-  totalContributed: number;
-  amountLeft: number;
-  admin: {
-    name: string;
-    email: string;
-  };
+  total: number;
+  remaining: number;
+  admin: string;
   adminWithdrawal: boolean;
   image?: string;
 }
@@ -22,13 +19,13 @@ export interface GroupDetails {
 export interface Transaction {
   email: string;
   amount: number;
-  date: Date;
+  date: string;
 }
 
 export interface ContributionGroups {
-  [groupName: string]: GroupDetails;
+  [name: string]: GroupDetails;
 }
 
 export interface GroupTransactions {
-  [groupName: string]: Transaction[];
+  [name: string]: Transaction[];
 }
