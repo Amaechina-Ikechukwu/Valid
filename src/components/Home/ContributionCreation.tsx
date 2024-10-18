@@ -9,7 +9,7 @@ const CreationSuccessModal = ({ onClose }: { onClose: () => void }) => {
         <figure>
           <img
             className="h-60 object-cover w-full"
-            src="/api/placeholder/400/240"
+            src="https://th.bing.com/th/id/R.5d6395d6e47500b44244b2368d6cb4b3?rik=XPO1xTGdbUCvGQ&pid=ImgRaw&r=0"
             alt="confetti"
           />
         </figure>

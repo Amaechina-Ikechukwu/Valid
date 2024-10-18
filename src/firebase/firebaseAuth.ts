@@ -5,6 +5,7 @@ import { auth, provider } from "./config";
 const signInWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, provider);
+
     return result; // Return the signed-in user
   } catch (error: any) {
     switch (error.code) {

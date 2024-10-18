@@ -1,7 +1,10 @@
+"use client";
 import { ContributionGroup } from "@/lib/types";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ContributionPill from "./ContributionPill";
+import { useAuth } from "@/contexts/AuthProvider";
+import { useRouter } from "next/navigation";
 const EmptyContributionComponent = () => {
   return (
     <div className="h-full flex justify-center items-center">
@@ -45,6 +48,16 @@ const EmptyContributionComponent = () => {
 };
 
 export default function HomeComponent() {
+  const { currentUser } = useAuth();
+  const router = useRouter();
+  const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (currentUser) {
+      currentUser.getIdToken().then((idToken) => setToken(idToken));
+    }
+  }, [currentUser]);
+
   const contributionGroups: ContributionGroup[] = [
     {
       id: `housing-${Date.now()}`, // Custom ID
@@ -80,27 +93,29 @@ export default function HomeComponent() {
   return (
     <div className="space-y-4">
       <div className="flex justify-end">
-        <Link href="/feature/create">
-          <button className="btn  text-fuchsia-700 hover:bg-fuchsia-300 bg-white font-bold w-fit mb-3 text-sm">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              className="size-4"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M12 4.5v15m7.5-7.5h-15"
-              />
-            </svg>
-            Create
-          </button>
-        </Link>
+        <button
+          onClick={() => router.push("/feature/create")}
+          className="btn  text-fuchsia-700 hover:bg-fuchsia-300 bg-white font-bold w-fit mb-3 text-sm"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            className="size-4"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 4.5v15m7.5-7.5h-15"
+            />
+          </svg>
+          Create
+        </button>
       </div>
       <p className="text-sm text-zinc-400">Your contribution groups</p>
+      <p className="text-sm w-12">{token}</p>
       {contributionGroups.map((group) => (
         <Link href={`/feature/${group.name}`} key={group.id}>
           <ContributionPill data={group} key={group.id} />

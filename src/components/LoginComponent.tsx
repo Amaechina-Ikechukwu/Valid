@@ -1,19 +1,24 @@
-import { SignedOut, SignInButton } from "@clerk/nextjs";
+"use client";
 
-export default async function LoginComponent() {
+import { useAuth } from "@/contexts/AuthProvider";
+
+export default function LoginComponent() {
+  const { login } = useAuth();
   return (
     <div className="flex flex-col items-center justify-center w-full h-full">
-      <div className=" shadow-xl  space-y-3 p-4 flex flex-col items-center justify-center rounded-lg  w-full">
+      <div className="shadow-xl space-y-3 p-4 flex flex-col items-center justify-center rounded-lg w-full">
         <h1 className="text-5xl text-fuchsia-600 font-bold">Valid</h1>
         <h5 className="text-zinc-600"> – Your Trusted Financial Trustee</h5>
 
-        <SignedOut>
-          <SignInButton>
-            <div className=" btn large bg-zinc-900 p-2 rounded-lg text-white w-full flex flex-col items-center justify-center focus:bg-zinc-700 hover:bg-fuchsia-300">
-              <p>Sign in to continue</p>
-            </div>
-          </SignInButton>
-        </SignedOut>
+        <div
+          className="btn large bg-zinc-900 p-2 rounded-lg text-white w-full flex flex-col items-center justify-center focus:bg-zinc-700 hover:bg-fuchsia-300 cursor-pointer"
+          onClick={login}
+        >
+          <p>Sign in to continue</p>
+        </div>
+
+        {/* This container is where Firebase UI will render */}
+        <div id="firebaseui-auth-container" />
       </div>
     </div>
   );
