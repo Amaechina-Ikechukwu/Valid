@@ -1,9 +1,8 @@
 "use client";
 import { ContributionGroup } from "@/lib/types";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ContributionPill from "./ContributionPill";
-import { useAuth } from "@/contexts/AuthProvider";
 import { useRouter } from "next/navigation";
 const EmptyContributionComponent = () => {
   return (
@@ -48,7 +47,6 @@ const EmptyContributionComponent = () => {
 };
 
 export default function HomeComponent() {
-  const { currentUser } = useAuth();
   const router = useRouter();
 
   const contributionGroups: ContributionGroup[] = [
