@@ -6,7 +6,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import React, { useRef, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 
 const CreationSuccessModal = ({ onClose }: { onClose: () => void }) => {
   return (
@@ -59,12 +59,12 @@ export default function ContributionCreation() {
         setProgress(0);
       }
 
-      const contributionData = {
-        name,
-        purpose,
-        amount: numericAmount,
-        imageUrl,
-      };
+      // const contributionData = {
+      //   name,
+      //   purpose,
+      //   amount: numericAmount,
+      //   imageUrl,
+      // };
 
       // // Send data to your server
       // await axios.post("/api/contributions", contributionData);
