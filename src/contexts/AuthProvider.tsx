@@ -1,12 +1,20 @@
 "use client";
-import React, { createContext, useContext, useState, ReactNode } from "react";
-import { onAuthStateChanged, signOut, User } from "firebase/auth";
+
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
+import { onAuthStateChanged, signOut, User, getIdToken } from "firebase/auth";
 import signInWithGoogle from "@/firebase/firebaseAuth";
 import { auth } from "@/firebase/config";
 
 // Auth context types
 interface AuthContextProps {
   currentUser: User | null;
+  token: string | null;
   login: () => void;
   logout: () => Promise<void>;
 }
@@ -37,9 +45,21 @@ const initializeAuth = (setCurrentUser: (user: User | null) => void) => {
 // Auth provider component
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(initialUser);
+  const [token, setToken] = useState<string | null>(null);
 
   // Initialize authentication once
   initializeAuth(setCurrentUser);
+
+  useEffect(() => {
+    if (currentUser) {
+      // Fetch the token whenever the currentUser is updated
+      getIdToken(currentUser).then((token) => {
+        setToken(token);
+      });
+    } else {
+      setToken(null); // Clear the token when the user is signed out
+    }
+  }, [currentUser]);
 
   const login = () => {
     signInWithGoogle();
@@ -49,7 +69,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return signOut(auth);
   };
 
-  const value = { currentUser, login, logout };
+  const value = { currentUser, token, login, logout };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

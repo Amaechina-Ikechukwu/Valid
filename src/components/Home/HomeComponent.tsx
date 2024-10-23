@@ -50,13 +50,6 @@ const EmptyContributionComponent = () => {
 export default function HomeComponent() {
   const { currentUser } = useAuth();
   const router = useRouter();
-  const [token, setToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (currentUser) {
-      currentUser.getIdToken().then((idToken) => setToken(idToken));
-    }
-  }, [currentUser]);
 
   const contributionGroups: ContributionGroup[] = [
     {
@@ -115,7 +108,7 @@ export default function HomeComponent() {
         </button>
       </div>
       <p className="text-sm text-zinc-400">Your contribution groups</p>
-      <p className="text-sm w-12">{token}</p>
+
       {contributionGroups.map((group) => (
         <Link href={`/feature/${group.name}`} key={group.id}>
           <ContributionPill data={group} key={group.id} />

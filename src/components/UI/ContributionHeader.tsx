@@ -1,8 +1,33 @@
+"use client";
+import { useAuth } from "@/contexts/AuthProvider";
 import { GroupDetails } from "@/lib/types";
+import { closePaymentModal, useFlutterwave } from "flutterwave-react-v3";
 import Link from "next/link";
 import React from "react";
 
 export default function ContributionHeader({ data }: { data: GroupDetails }) {
+  const { currentUser } = useAuth();
+  const config = {
+    public_key: process.env.NEXT_PUBLIC_FLW ?? "",
+    tx_ref: Date.now().toString(),
+    amount: 1000,
+    currency: "NGN",
+    payment_options: "card,mobilemoney,ussd",
+    customer: {
+      email: currentUser?.email ?? "",
+      phone_number: currentUser?.phoneNumber ?? "",
+      name: currentUser?.displayName ?? "",
+    },
+    customizations: {
+      title: data.name + " (Valid)",
+      description: data.description,
+      logo: data.image ?? " ",
+    },
+    meta: {
+      groupId: data.name,
+    },
+  };
+  const handleFlutterPayment = useFlutterwave(config);
   return (
     <div>
       <div className="space-y-2">
@@ -47,9 +72,25 @@ export default function ContributionHeader({ data }: { data: GroupDetails }) {
       </div>
 
       <div className="divider" />
-      <button className="btn btn-ghost border-1 border-gray-300 w-full">
-        Initiate Withdrawal Process
+      <button
+        onClick={() => {
+          handleFlutterPayment({
+            callback: (response) => {
+              console.log(response);
+              closePaymentModal(); // this will close the modal programmatically
+            },
+            onClose: () => {},
+          });
+        }}
+        className="btn bg-zinc-900 border-1 border-gray-300 w-full"
+      >
+        Contribute Funds
       </button>
+      {data.admin == "you" && (
+        <button className="btn btn-ghost border-1 border-gray-300 w-full">
+          Initiate Withdrawal Process
+        </button>
+      )}
     </div>
   );
 }
