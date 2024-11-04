@@ -6,14 +6,15 @@ export interface ContributionGroup {
   image?: string;
 }
 export interface GroupDetails {
-  description: string;
+  purpose: string;
   name: string;
-  participantsEmails: string[];
-  total: number;
+  participants: string[];
+  amount: number;
   remaining: number;
   admin: string;
-  adminWithdrawal: boolean;
+  adminWithdrawal: { initiated: boolean; initiatedAt: string };
   image?: string;
+  id: string;
 }
 
 export interface Transaction {

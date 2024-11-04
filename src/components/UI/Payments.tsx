@@ -1,17 +1,50 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthProvider";
 import { closePaymentModal, FlutterWaveButton } from "flutterwave-react-v3";
 import { GroupDetails } from "@/lib/types";
 
-const FlutterwavePayment = ({ data }: { data: GroupDetails }) => {
-  const [amount, setAmount] = useState<number>(1000);
+const FlutterwavePayment = ({ id }: { id: string }) => {
+  const { token, currentUser } = useAuth();
+  const [group, setGroup] = useState<GroupDetails | null>(null); // Initialize as null
+  const [amount, setAmount] = useState<number>(1000); // Define state at the top
+
+  useEffect(() => {
+    async function fetchGroups() {
+      if (!token) return;
+
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API}/contributions/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+
+        const { data } = await response.json();
+        setGroup(data);
+      } catch (error) {
+        console.error("Failed to fetch contributions:", error);
+      }
+    }
+
+    fetchGroups();
+  }, [token, id]);
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAmount(parseFloat(e.target.value));
   };
 
-  const { currentUser } = useAuth();
+  if (!group) {
+    return null; // Render nothing or a loading spinner here
+  }
+
   const config = {
     public_key: process.env.NEXT_PUBLIC_FLW ?? "",
     tx_ref: Date.now().toString(),
@@ -24,20 +57,19 @@ const FlutterwavePayment = ({ data }: { data: GroupDetails }) => {
       name: currentUser?.displayName ?? "",
     },
     customizations: {
-      title: data.name + " (Valid)",
-      description: data.description,
-      logo: data.image ?? " ",
+      title: group.name + " (Valid)",
+      description: group.purpose,
+      logo: group.image ?? " ",
     },
     meta: {
-      groupId: data.name,
+      groupId: group.name,
     },
   };
 
   const fwConfig = {
     ...config,
     callback: (response: any) => {
-      console.log(response);
-      closePaymentModal(); // close modal programmatically
+      closePaymentModal();
     },
     onClose: () => {
       console.log("Payment modal closed");

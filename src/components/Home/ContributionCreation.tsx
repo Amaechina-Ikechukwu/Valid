@@ -1,11 +1,14 @@
 "use client";
+import { useAuth } from "@/contexts/AuthProvider";
+import axios from "axios";
 import {
   getStorage,
   ref,
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import React, { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useRef, useState } from "react";
 // import axios from "axios";
 
 const CreationSuccessModal = ({ onClose }: { onClose: () => void }) => {
@@ -34,6 +37,7 @@ const CreationSuccessModal = ({ onClose }: { onClose: () => void }) => {
 };
 
 export default function ContributionCreation() {
+  const { token } = useAuth();
   const modalRef = useRef<HTMLDialogElement>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [amount, setAmount] = useState<string>("");
@@ -42,6 +46,24 @@ export default function ContributionCreation() {
   const [purpose, setPurpose] = useState<string>("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [progress, setProgress] = useState<number>(0);
+  const [refined, setRefined] = useState<string[]>([]);
+  const [refining, setRefining] = useState<boolean | null>(null);
+  const getAiRefinment = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setRefining(true);
+    const { data } = await axios.post(
+      `${process.env.NEXT_PUBLIC_API}/ai/refine` || "",
+      purpose,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    setRefined(data.data);
+   
+    setRefining(false);
+  };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const numericAmount = parseFloat(amount.replace(/,/g, ""));
@@ -59,15 +81,23 @@ export default function ContributionCreation() {
         setProgress(0);
       }
 
-      // const contributionData = {
-      //   name,
-      //   purpose,
-      //   amount: numericAmount,
-      //   imageUrl,
-      // };
+      const contributionData = {
+        name,
+        purpose,
+        amount: numericAmount,
+        imageUrl,
+      };
 
       // // Send data to your server
-      // await axios.post("/api/contributions", contributionData);
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_API}/contributions/create` || "",
+        contributionData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       // Show modal on successful creation
       modalRef.current?.showModal();
@@ -76,9 +106,11 @@ export default function ContributionCreation() {
       console.error(error);
     }
   };
+  const router = useRouter();
 
   const closeModal = () => {
     modalRef.current?.close();
+    router.back();
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -133,8 +165,11 @@ export default function ContributionCreation() {
   };
 
   return (
-    <div className="w-full max-w-xs space-y-4">
-      <form onSubmit={handleSubmit} className="overflow-y-auto h-[80vh]">
+    <div className="w-full max-w-xs ">
+      <form
+        onSubmit={handleSubmit}
+        className="overflow-y-auto h-[80vh] space-y-8"
+      >
         {previewImage && (
           <div className="mt-4 p-2 bg-zinc-200 rounded-md">
             <img
@@ -165,20 +200,56 @@ export default function ContributionCreation() {
             required
           />
         </label>
-
-        <label className="form-control w-full">
-          <div className="label">
-            <span className="label-text">Purpose of contribution?</span>
+        <div className="space-y-4">
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text">Purpose of contribution?</span>
+            </div>
+            <h6 className="text-warning text-sm">
+              Write a little something to use our AI to refine your thoughts
+            </h6>
+            <input
+              type="text"
+              value={purpose}
+              onChange={(e) => setPurpose(e.target.value)}
+              placeholder="Type here"
+              className="input input-bordered w-full bg-zinc-50"
+              required
+            />
+          </label>
+          {purpose.length > 20 && (
+            <div>
+              <button
+                onClick={getAiRefinment}
+                className="btn btn-outline btn-purple opacity-70 btn-xs"
+              >
+                Refine with AI
+              </button>
+            </div>
+          )}
+          <div className="w-full h-fit">
+            {refining ? (
+              <div className="flex gap-2">
+                {Array.from({ length: 5 }, (_, i) => (
+                  <div className="skeleton h-12 w-12 bg-zinc-200"></div>
+                ))}
+              </div>
+            ) : (
+              <div className="overflow-x-auto w-full">
+                <div className="flex gap-4 ">
+                  {refined.map((data, index) => (
+                    <div
+                      key={index}
+                      className="rounded-lg bg-zinc-200 p-2  h-fit"
+                    >
+                      <p className="text-xs">{data}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-          <input
-            type="text"
-            value={purpose}
-            onChange={(e) => setPurpose(e.target.value)}
-            placeholder="Type here"
-            className="input input-bordered w-full bg-zinc-50"
-            required
-          />
-        </label>
+        </div>
 
         <label className="form-control w-full mt-4">
           <div className="label">

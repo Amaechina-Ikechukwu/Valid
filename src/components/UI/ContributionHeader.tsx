@@ -1,60 +1,100 @@
+"use client";
+import { useAuth } from "@/contexts/AuthProvider";
 import { GroupDetails } from "@/lib/types";
 
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-export default function ContributionHeader({ data }: { data: GroupDetails }) {
+export default function ContributionHeader({ id }: { id: string }) {
+  const [group, setGroup] = useState<GroupDetails>();
+  const { token } = useAuth();
+  useEffect(() => {
+    async function fetchGroups() {
+      if (!token) return;
+
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API}/contributions/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+
+        const { data } = await response.json();
+
+        setGroup(data);
+      } catch (error) {
+        console.error("Failed to fetch contributions:", error);
+      }
+    }
+
+    fetchGroups();
+  }, [token]);
+  if (!group) {
+    return;
+  }
   return (
     <div>
       <div className="space-y-2">
-        {data.image ? (
-          <img src={data.image || ""} alt={data.name} />
+        {group.image ? (
+          <img src={group.image || ""} alt={group.name} />
         ) : (
           <div className="avatar placeholder flex flex-col space-y-2">
             <div className="bg-zinc-500 flex items-center justify-center text-white w-24 p-2  rounded-full">
               <span className="text-5xl text-end h-fit mt-2">
-                {data.name[0]}
+                {group.name[0]}
               </span>
             </div>
           </div>
         )}
-        <p className="text-2xl text-zinc-600">{data.name}</p>
-        <p className="text-zinc-600">{data.description}</p>
+        <p className="text-2xl text-zinc-600">{group.name}</p>
+        <p className="text-zinc-600">{group.purpose}</p>
       </div>
       <div className="divider" />
       <div>
-        <p className="text-5xl font-bold">{data.total}</p>
+        <p className="text-5xl font-bold">{group.amount}</p>
       </div>
-      <div className="flex items-center gap-2">
-        <Link href={`${data.name}/transactions`}>
-          <p className="underline ">contributed by</p>
-        </Link>
+      {group.participants ? (
+        <div className="flex items-center gap-2">
+          <Link href={`${group.name}/transactions`}>
+            <p className="underline ">contributed by</p>
+          </Link>
 
-        <div
-          className="avatar-group -space-x-5 rtl:space-x-reverse items-center gap-2 "
-          role="button"
-        >
-          {data.participantsEmails.map((email) => (
-            <div
-              key={email}
-              className="avatar  flex items-center justify-center border-0 outline-0"
-            >
-              <div className="bg-zinc-300 flex items-center justify-center text-zinc-700 w-8  border-0 outline-0 rounded-full">
-                <p className="text-2xl text-center   ">{email[0]}</p>
-              </div>
-            </div>
-          ))}
+          <div
+            className="avatar-group -space-x-5 rtl:space-x-reverse items-center gap-2 "
+            role="button"
+          >
+            {group.participants &&
+              group.participants.map((email) => (
+                <div
+                  key={email}
+                  className="avatar  flex items-center justify-center border-0 outline-0"
+                >
+                  <div className="bg-zinc-300 flex items-center justify-center text-zinc-700 w-8  border-0 outline-0 rounded-full">
+                    <p className="text-2xl text-center   ">{email[0]}</p>
+                  </div>
+                </div>
+              ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        <p className="text-zinc-600">No payments made yet</p>
+      )}
 
       <div className="divider" />
-      <Link href={`${data.name}/payment`}>
-        <button className="btn bg-zinc-900 border-1 border-gray-300 w-full">
+      <Link href={`${group.id}/payment`}>
+        <button className="btn bg-zinc-900 border-1 border-gray-300 w-full ">
           Contribute Funds
         </button>
       </Link>
 
-      {data.admin == "you" && (
+      {group.admin == "you" && (
         <button className="btn btn-ghost border-1 border-gray-300 w-full">
           Initiate Withdrawal Process
         </button>
