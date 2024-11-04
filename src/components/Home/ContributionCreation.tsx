@@ -61,7 +61,7 @@ export default function ContributionCreation() {
       }
     );
     setRefined(data.data);
-   
+
     setRefining(false);
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -231,7 +231,7 @@ export default function ContributionCreation() {
             {refining ? (
               <div className="flex gap-2">
                 {Array.from({ length: 5 }, (_, i) => (
-                  <div className="skeleton h-12 w-12 bg-zinc-200"></div>
+                  <div key={i} className="skeleton h-12 w-12 bg-zinc-200"></div>
                 ))}
               </div>
             ) : (
