@@ -229,10 +229,15 @@ export default function ContributionCreation() {
           )}
           <div className="w-full h-fit">
             {refining ? (
-              <div className="flex gap-2">
-                {Array.from({ length: 5 }, (_, i) => (
-                  <div key={i} className="skeleton h-12 w-12 bg-zinc-200"></div>
-                ))}
+              <div className="overflow-x-auto">
+                <div className="flex gap-2">
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <div
+                      key={`skeleton-${i}`}
+                      className="skeleton h-12 w-12 bg-zinc-200 rounded-md"
+                    ></div>
+                  ))}
+                </div>
               </div>
             ) : (
               <div className="overflow-x-auto w-full">
