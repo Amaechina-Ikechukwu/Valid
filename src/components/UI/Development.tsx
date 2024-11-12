@@ -4,5 +4,9 @@ import React from "react";
 
 export default function Development() {
   const { token } = useAuth();
-  return <div>{token}</div>;
+  return (
+    <div>
+      <p>{token}</p>
+    </div>
+  );
 }

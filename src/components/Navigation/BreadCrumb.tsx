@@ -20,7 +20,7 @@ export default function BreadCrumb() {
           }
           return (
             <li key={path}>
-              <Link href={href}>{path.toUpperCase()}</Link>
+              <Link href={href}>{decodeURIComponent(path.toUpperCase())}</Link>
             </li>
           );
         })}

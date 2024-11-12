@@ -3,39 +3,12 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthProvider";
 import { closePaymentModal, FlutterWaveButton } from "flutterwave-react-v3";
 import { GroupDetails } from "@/lib/types";
+import { useRouter } from "next/navigation";
 
-const FlutterwavePayment = ({ id }: { id: string }) => {
+const FlutterwavePayment = ({ group }: { group: GroupDetails }) => {
   const { token, currentUser } = useAuth();
-  const [group, setGroup] = useState<GroupDetails | null>(null); // Initialize as null
+  const router = useRouter();
   const [amount, setAmount] = useState<number>(1000); // Define state at the top
-
-  useEffect(() => {
-    async function fetchGroups() {
-      if (!token) return;
-
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API}/contributions/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status} ${response.statusText}`);
-        }
-
-        const { data } = await response.json();
-        setGroup(data);
-      } catch (error) {
-        console.error("Failed to fetch contributions:", error);
-      }
-    }
-
-    fetchGroups();
-  }, [token, id]);
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAmount(parseFloat(e.target.value));
@@ -70,6 +43,7 @@ const FlutterwavePayment = ({ id }: { id: string }) => {
     ...config,
     callback: (response: any) => {
       closePaymentModal();
+      router.back();
     },
     onClose: () => {
       console.log("Payment modal closed");

@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import ContributionPill from "./ContributionPill";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthProvider";
+import axios from "axios";
 
 const EmptyContributionComponent = () => {
   return (
@@ -61,7 +62,7 @@ export default function HomeComponent() {
       if (!token) return;
 
       try {
-        const response = await fetch(
+        const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API}/contributions`,
           {
             headers: {
@@ -70,15 +71,16 @@ export default function HomeComponent() {
           }
         );
 
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status} ${response.statusText}`);
-        }
-
-        const { data } = await response.json();
-
-        setContributionGroups(data);
+        setContributionGroups(response.data.data); // Adjust if the structure of data is different
       } catch (error) {
-        console.error("Failed to fetch contributions:", error);
+        if (axios.isAxiosError(error)) {
+          console.error(
+            "Failed to fetch contributions:",
+            error.response?.data || error.message
+          );
+        } else {
+          console.error("Unexpected error:", error);
+        }
       }
     }
 
@@ -116,7 +118,7 @@ export default function HomeComponent() {
       <p className="text-sm text-zinc-400">Your contribution groups</p>
       <div className="overflow-y-auto h-[420px]">
         {contributionGroups.map((group) => (
-          <Link href={`/feature/${group.id}`} key={group.id}>
+          <Link href={`/feature/${group.name}`} key={group.id}>
             <ContributionPill data={group} key={group.id} />
           </Link>
         ))}

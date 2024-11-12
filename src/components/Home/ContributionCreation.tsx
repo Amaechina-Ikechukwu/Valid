@@ -82,10 +82,10 @@ export default function ContributionCreation() {
       }
 
       const contributionData = {
-        name,
+        name: name.toLocaleLowerCase(),
         purpose,
         amount: numericAmount,
-        imageUrl,
+        image: imageUrl,
       };
 
       // // Send data to your server

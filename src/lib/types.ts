@@ -1,16 +1,17 @@
 export interface ContributionGroup {
   id: string;
   name: string;
-  participants: number;
-  percentageToGoal: number;
+  participants: [];
+  remaining: number;
   image?: string;
+  purpose: string;
 }
 export interface GroupDetails {
   purpose: string;
   name: string;
   participants: string[];
   amount: number;
-  remaining: number;
+  contributedAmount: number;
   admin: string;
   adminWithdrawal: { initiated: boolean; initiatedAt: string };
   image?: string;

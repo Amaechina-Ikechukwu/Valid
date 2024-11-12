@@ -23,22 +23,34 @@ export default function ContributionPill({
       )}
       <div className="w-full">
         <h3 className="text-lg font-bold text-zinc-700">{data.name}</h3>
+        <h3 className="text-xs text-zinc-600">{data.purpose}</h3>
         <div className="flex justify-between items-center ">
           <p className="text-lg font-light text-zinc-500">
-            {data.participants} paid
+            {data.participants &&
+              data.participants.map((email) => (
+                <div
+                  key={email}
+                  className="avatar  flex items-center justify-center border-0 outline-0"
+                >
+                  <div className="bg-zinc-300 flex items-center justify-center text-zinc-700 w-8  border-0 outline-0 rounded-full">
+                    <p className="text-2xl text-center   ">{email[0]}</p>
+                  </div>
+                </div>
+              ))}
+            paid
           </p>
           <div
             className="radial-progress text-sm text-zinc-500"
             style={
               {
-                "--value": data.percentageToGoal,
+                "--value": data.remaining,
                 "--size": "2rem",
                 "--thickness": "2px",
               } as React.CSSProperties
             }
             role="progressbar"
           >
-            {data.percentageToGoal}
+            {data.remaining}
           </div>
         </div>
       </div>
