@@ -15,7 +15,7 @@ export default function Navigation() {
 
   if (currentUser) {
     return (
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between ">
         <div>
           <BreadCrumb />
         </div>

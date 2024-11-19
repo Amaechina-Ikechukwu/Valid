@@ -16,6 +16,9 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      backgroundImage: {
+        gradient: "linear-gradient(90deg, #3b82f6, #9333ea)",
+      },
     },
   },
   plugins: [addVariablesForColors, require("daisyui")],

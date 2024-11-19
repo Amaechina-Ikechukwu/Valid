@@ -1,13 +1,21 @@
 import ContributionHeader from "@/components/UI/ContributionHeader";
-import { contributionGroups } from "@/lib/exampledata";
+
 
 export default async function Page({ params }: { params: { id: string } }) {
-  let data = await fetch(
-    `${process.env.NEXT_PUBLIC_API}/contributions/${decodeURIComponent(
-      params.id
-    )}`
-  );
-  let group = await data.json();
+const response = await fetch(
+  `${process.env.NEXT_PUBLIC_API}/contributions/${decodeURIComponent(
+    params.id
+  )}`,
+  {
+    method: "GET", // Specify the HTTP method
+  }
+);
 
-  return <div>{<ContributionHeader group={group.data} />}</div>;
+if (!response.ok) {
+  throw new Error(`Error fetching contribution data: ${response.statusText}`);
+}
+
+const group = await response.json();
+
+return <div className="">{<ContributionHeader group={group.data} />}</div>;
 }

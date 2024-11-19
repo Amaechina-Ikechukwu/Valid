@@ -8,7 +8,7 @@ export default function BreadCrumb() {
   const pathArray = pathname.split("/").filter(Boolean);
 
   return (
-    <div className="breadcrumbs w-full max-w-xs text-sm break-words">
+    <div className="breadcrumbs w-full max-w-xs md:max-w-md text-sm break-words">
       <ul className="flex flex-wrap space-x-2">
         {pathArray.map((path, index) => {
           const href = `/${pathArray.slice(0, index + 1).join("/")}`;

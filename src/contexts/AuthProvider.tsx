@@ -10,11 +10,13 @@ import React, {
 import { onAuthStateChanged, signOut, User, getIdToken } from "firebase/auth";
 import signInWithGoogle from "@/firebase/firebaseAuth";
 import { auth } from "@/firebase/config";
+import ValidLoader from "@/components/UI/ValidLoader";
 
 // Auth context types
 interface AuthContextProps {
   currentUser: User | null;
   token: string | null;
+  loading: boolean;
   login: () => void;
   logout: () => Promise<void>;
 }
@@ -28,48 +30,51 @@ export const useAuth = () => {
   return context;
 };
 
-// Initialize authentication state outside of component lifecycle
-let initialized = false;
-let initialUser: User | null = null;
-
-const initializeAuth = (setCurrentUser: (user: User | null) => void) => {
-  if (!initialized) {
-    onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-      initialUser = user;
-    });
-    initialized = true;
-  }
-};
-
 // Auth provider component
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [currentUser, setCurrentUser] = useState<User | null>(initialUser);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
-
-  // Initialize authentication once
-  initializeAuth(setCurrentUser);
+  const [loading, setLoading] = useState(true); // Track loading state
 
   useEffect(() => {
-    if (currentUser) {
-      // Fetch the token whenever the currentUser is updated
-      getIdToken(currentUser).then((token) => {
-        setToken(token);
-      });
-    } else {
-      setToken(null); // Clear the token when the user is signed out
-    }
-  }, [currentUser]);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+      if (user) {
+        // Fetch token when user is available
+        getIdToken(user).then((token) => {
+          setToken(token);
+          setLoading(false); // Loading complete once token is retrieved
+        });
+      } else {
+        setToken(null);
+        setLoading(false); // Loading complete even if no user is signed in
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup subscription on unmount
+  }, []);
 
   const login = () => {
-    signInWithGoogle();
+    setLoading(true); // Show loading while signing in
+    signInWithGoogle().finally(() => setLoading(false)); // End loading after sign-in process
   };
 
   const logout = () => {
-    return signOut(auth);
+    setLoading(true); // Show loading while signing out
+    return signOut(auth).finally(() => setLoading(false)); // End loading after sign-out process
   };
 
-  const value = { currentUser, token, login, logout };
+  const value = { currentUser, token, loading, login, logout };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {loading ? (
+        <div className="h-screen flex items-center justify-center">
+          <ValidLoader />
+        </div>
+      ) : (
+        children
+      )}
+    </AuthContext.Provider>
+  );
 };

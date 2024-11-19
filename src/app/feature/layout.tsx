@@ -1,4 +1,6 @@
 import Layout from "@/components/Home/Layout";
+import ValidLoader from "@/components/UI/ValidLoader";
+import { Suspense } from "react";
 
 export default function FunctionLayout({
   children,
@@ -7,8 +9,10 @@ export default function FunctionLayout({
 }) {
   return (
     <main className="flex items-center justify-center h-screen md:h-full ">
-      <div className="artboard phone-1 md:phone-2 p-4">
-        <Layout>{children}</Layout>
+      <div className=" md:w-3/4 p-4">
+        <Suspense fallback={<ValidLoader />}>
+          <Layout>{children}</Layout>
+        </Suspense>
       </div>
     </main>
   );
