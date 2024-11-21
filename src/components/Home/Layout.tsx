@@ -14,7 +14,11 @@ function ChildrenLayout({ children }: { children: React.ReactNode }) {
   if (!currentUser) {
     return <LoginComponent />;
   }
-  return <div>{children}</div>;
+  return (
+    <div className="bg-white h-screen overflow-auto flex items-center justify-center w-full">
+      <div className="w-full">{children}</div>
+    </div>
+  );
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {

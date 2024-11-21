@@ -205,9 +205,9 @@ export default function ContributionCreation() {
             <div className="label">
               <span className="label-text">Purpose of contribution?</span>
             </div>
-            <h6 className="text-warning text-sm">
+            {/* <h6 className="text-warning text-sm">
               Write a little something to use our AI to refine your thoughts
-            </h6>
+            </h6> */}
             <input
               type="text"
               value={purpose}
@@ -217,7 +217,7 @@ export default function ContributionCreation() {
               required
             />
           </label>
-          {purpose.length > 20 && (
+          {/* {purpose.length > 20 && (
             <div>
               <button
                 onClick={getAiRefinment}
@@ -226,7 +226,7 @@ export default function ContributionCreation() {
                 Refine with AI
               </button>
             </div>
-          )}
+          )} */}
           <div className="w-full h-fit">
             {refining ? (
               <div className="overflow-x-auto">
@@ -290,7 +290,7 @@ export default function ContributionCreation() {
 
         <button
           type="submit"
-          className="btn w-full bg-fuchsia-500 hover:bg-fuchsia-700 text-white outline outline-0 mt-4"
+          className="btn w-full bg-gradient text-white outline outline-0 mt-4"
         >
           Create Contribution
         </button>

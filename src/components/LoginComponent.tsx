@@ -5,7 +5,7 @@ import { useAuth } from "@/contexts/AuthProvider";
 export default function LoginComponent() {
   const { login } = useAuth();
   return (
-    <div className="flex flex-col items-center justify-center w-full h-screen">
+    <div className="flex flex-col items-center justify-center w-screen h-screen">
       <div className="shadow-xl space-y-3 p-4 flex flex-col items-center justify-center rounded-lg w-full">
         <h1 className="text-5xl text-fuchsia-600 font-bold">Valid</h1>
         <h5 className="text-zinc-600"> – Your Trusted Financial Trustee</h5>

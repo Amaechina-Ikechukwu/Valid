@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`font-josefin antialiased container mx-auto ${josefin_sans.className}`}
+        className={`font-josefin antialiased container mx-auto ${josefin_sans.className} bg-white`}
       >
         {children}
       </body>

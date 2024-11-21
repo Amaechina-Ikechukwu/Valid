@@ -71,7 +71,7 @@ const FlutterwavePayment = ({ group }: { group: GroupDetails }) => {
       <FlutterWaveButton
         {...fwConfig}
         text="Pay Now"
-        className="btn bg-zinc-900 border-1 border-gray-300 w-full"
+        className="btn bg-gradient border-1 border-gray-300 w-full text-white"
       />
     </div>
   );

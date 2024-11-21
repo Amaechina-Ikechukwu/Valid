@@ -8,7 +8,7 @@ export default function FunctionLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex items-center justify-center h-screen md:h-full ">
+    <main className="flex items-center justify-center  ">
       <div className=" md:w-3/4 p-4">
         <Suspense fallback={<ValidLoader />}>
           <Layout>{children}</Layout>
