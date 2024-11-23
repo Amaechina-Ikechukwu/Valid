@@ -15,7 +15,7 @@ export default function Home() {
         <div className="w-full bg-gradient h-8 relative z-4" />
         <div className="w-full bg-white">
           <h3 className="relative z-20 text-3xl md:text-5xl  bg-clip-text text-transparent bg-gradient-to-b from-neutral-400 to-neutral-600 md:w-3/6  font-josefin font-bold">
-            It's designed to facilitate collective funding efforts where
+            It is designed to facilitate collective funding efforts where
             participants may not have a pre-existing trusted individual to
             manage the pooled funds.
           </h3>
