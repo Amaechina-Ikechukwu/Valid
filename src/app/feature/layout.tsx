@@ -9,7 +9,7 @@ export default function FunctionLayout({
 }) {
   return (
     <main className="flex items-center justify-center  ">
-      <div className=" md:w-3/4 p-4">
+      <div className="w-full md:w-3/4 p-4">
         <Suspense fallback={<ValidLoader />}>
           <Layout>{children}</Layout>
         </Suspense>

@@ -50,8 +50,8 @@ export default function ContributionHeader({ group }: { group: GroupDetails }) {
 
   return (
     <BackgroundGradient>
-      <div className="bg-white p-4 rounded-[20px] flex flex-col md:flex-row items-center justify-evenly">
-        <div className="space-y-2 ">
+      <div className="bg-white p-4 space-y-3 rounded-[20px] flex flex-col md:flex-row items-center justify-evenly w-full">
+        <div className=" ">
           {group.image && group.image.length > 1 ? (
             <img
               src={group.image || ""}
@@ -64,7 +64,7 @@ export default function ContributionHeader({ group }: { group: GroupDetails }) {
             </div>
           )}
         </div>
-        <div>
+        <div className="w-full md:w-fit">
           <div>
             <p className="text-4xl text-zinc-600">
               {capitalizeWords(group.name)}
@@ -133,8 +133,7 @@ export default function ContributionHeader({ group }: { group: GroupDetails }) {
               </button>
               // </Link>
             )}
-            {group.adminWithdrawal &&
-              group.adminWithdrawal.initiated &&
+            {group.adminWithdrawal == undefined &&
               group.admin === currentUser?.uid && (
                 <button
                   className="btn border-1 border-gray-300 w-full bg-zinc-900 text-white"
