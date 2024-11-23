@@ -12,7 +12,7 @@ export default function LandingPage() {
             Valid
           </h1>
 
-          <h3 className="relative z-20 text-3xl md:text-5xl  bg-clip-text text-transparent bg-gradient-to-b from-neutral-400 to-neutral-600   font-josefin font-bold">
+          <h3 className="relative z-50 text-3xl md:text-5xl  bg-clip-text text-transparent bg-gradient-to-b from-neutral-400 to-neutral-600   font-josefin font-bold">
             a secure platform that acts as a neutral, trusted party for group
             financial contributions.
           </h3>
@@ -41,7 +41,7 @@ export default function LandingPage() {
             //   width={500}
             //   height={500}
             alt="Valid Contribution Group User Interface"
-            className="rounded-lg shadow-md transform rotate-12 scale-125 md:scale-150 relative -left-20 md:right-[85px] "
+            className="rounded-lg shadow-md z-40 transform rotate-12 scale-125 md:scale-[1.85] relative -left-20 md:-left-[250px] "
           />
           {/* Optional subtle shadow */}
           {/* <div className="absolute -inset-1 bg-gradient-to-r from-blue-300 to-purple-300 blur-md transform rotate-6" /> */}

@@ -2,23 +2,21 @@ import LandingPage from "@/components/Landing/LandingPage";
 import { BackgroundBeams } from "@/components/UI/BackgroundBeams";
 import Image from "next/image";
 import Logo from "@/app/Valid logo.png";
+import Description from "@/components/Landing/Description";
+import HowItWorks from "@/components/Landing/HowItWorks";
 
 export default function Home() {
   return (
-    <div className="">
+    <div className="w-full bg-white">
       <header>
         <Image alt="Valid" src={Logo} width={100} className="relative z-10" />
       </header>
-      <main className=" mt-[140px] space-y-4 bg-white">
+      <main className=" mt-[140px] space-y-4 bg-white w-full">
         <BackgroundBeams />
         <LandingPage />
-        <div className="w-full bg-gradient h-8 relative z-4" />
-        <div className="w-full bg-white">
-          <h3 className="relative z-20 text-3xl md:text-5xl  bg-clip-text text-transparent bg-gradient-to-b from-neutral-400 to-neutral-600 md:w-3/6  font-josefin font-bold">
-            It is designed to facilitate collective funding efforts where
-            participants may not have a pre-existing trusted individual to
-            manage the pooled funds.
-          </h3>
+        <Description />
+        <div className=" relative z-10">
+          <HowItWorks />
         </div>
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">

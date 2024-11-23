@@ -17,9 +17,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="bg-white">
       <body
-        className={`font-josefin antialiased container mx-auto ${josefin_sans.className} bg-white`}
+        className={`font-josefin antialiased container mx-auto  ${josefin_sans.className} bg-white w-full`}
       >
         {children}
       </body>

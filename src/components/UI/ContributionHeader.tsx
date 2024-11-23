@@ -69,7 +69,7 @@ export default function ContributionHeader({ group }: { group: GroupDetails }) {
             <p className="text-4xl text-zinc-600">
               {capitalizeWords(group.name)}
             </p>
-            <p className="text-zinc-600 text-lg">{group.purpose}</p>
+            <p className="text-zinc-600 text-lg md:max-w-sm">{group.purpose}</p>
             <button
               className="btn btn-active btn-link p-0 text-gray-500"
               onClick={copyLink}

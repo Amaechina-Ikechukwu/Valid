@@ -165,10 +165,10 @@ export default function ContributionCreation() {
   };
 
   return (
-    <div className="w-full max-w-xs ">
+    <div className="w-full  flex justify-center">
       <form
         onSubmit={handleSubmit}
-        className="overflow-y-auto h-[80vh] space-y-8"
+        className="overflow-y-auto h-[80vh] space-y-8 w-9/12"
       >
         {previewImage && (
           <div className="mt-4 p-2 bg-zinc-200 rounded-md">
@@ -208,8 +208,7 @@ export default function ContributionCreation() {
             {/* <h6 className="text-warning text-sm">
               Write a little something to use our AI to refine your thoughts
             </h6> */}
-            <input
-              type="text"
+            <textarea
               value={purpose}
               onChange={(e) => setPurpose(e.target.value)}
               placeholder="Type here"
