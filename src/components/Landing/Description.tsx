@@ -11,7 +11,7 @@ export default function Description() {
             participants may not have a pre-existing trusted individual to
             manage the pooled funds.
           </h3>
-          <button className="btn bg-gradient relative z-20 btn-lg border-0 text-2xl text-white mt-5">
+          <button className="btn bg-gradient relative z-20 btn-lg border-0 text-2xl text-white mt-5 hidden md:block">
             Use Valid Now
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +42,7 @@ export default function Description() {
         </div>
       </div>
       <div className="px-4">
-        <button className="btn bg-gradient relative z-20 btn-lg border-0 text-2xl text-white mt-5 md:w-3/6 md:hidden w-full">
+        <button className="btn bg-gradient relative z-20 btn-lg border-0 text-2xl text-white mt-5 md:w-3/6 sm:hidden w-full">
           Start Using Valid
           <svg
             xmlns="http://www.w3.org/2000/svg"

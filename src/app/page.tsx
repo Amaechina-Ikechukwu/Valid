@@ -4,6 +4,7 @@ import Image from "next/image";
 import Logo from "@/app/Valid logo.png";
 import Description from "@/components/Landing/Description";
 import HowItWorks from "@/components/Landing/HowItWorks";
+import { BackgroundGradientAnimation } from "../components/UI/BackgroundGradientAnimation";
 
 export default function Home() {
   return (
@@ -14,9 +15,27 @@ export default function Home() {
       <main className=" mt-[140px] space-y-4 bg-white w-full">
         <BackgroundBeams />
         <LandingPage />
-        <Description />
+        <div id="description">
+          <Description />
+        </div>
+
         <div className=" relative z-10">
           <HowItWorks />
+        </div>
+        <div className=" relative z-20">
+          <BackgroundGradientAnimation>
+            <div className="absolute z-50 inset-0 flex flex-col items-center justify-center text-white font-bold px-4 pointer-events-none text-3xl text-center md:text-4xl lg:text-7xl space-y-4">
+              <p className="bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-b from-white/80 to-white/20">
+                What makes VALID special?
+              </p>
+              <h4 className="text-2xl text-white text-center">
+                Though the money is sent, the control is still in your hands.
+              </h4>
+              <h5 className="text-xl text-white text-center">
+                Only your approval allows the withdrawal of contributed funds.
+              </h5>
+            </div>
+          </BackgroundGradientAnimation>
         </div>
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import React from "react";
 import groupCard from "@/app/group card.png";
+import Link from "next/link";
 export default function LandingPage() {
   return (
     <div>
@@ -16,24 +17,25 @@ export default function LandingPage() {
             a secure platform that acts as a neutral, trusted party for group
             financial contributions.
           </h3>
-
-          <button className="btn bg-black relative z-20 btn-lg border-0 text-2xl text-white mt-5">
-            Read More
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              className="size-8 "
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"
-              />
-            </svg>
-          </button>
+          <Link href="#description">
+            <button className="btn bg-black relative z-20 btn-lg border-0 text-2xl text-white mt-5">
+              Read More
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                className="size-8 "
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"
+                />
+              </svg>
+            </button>
+          </Link>
         </div>
         <div className="mt-10 relative z-6">
           <Image
