@@ -5,6 +5,7 @@ import Logo from "@/app/Valid logo.png";
 import Description from "@/components/Landing/Description";
 import HowItWorks from "@/components/Landing/HowItWorks";
 import { BackgroundGradientAnimation } from "../components/UI/BackgroundGradientAnimation";
+import Testimonials from "@/components/Landing/Testimonials";
 
 export default function Home() {
   return (
@@ -36,6 +37,9 @@ export default function Home() {
               </h5>
             </div>
           </BackgroundGradientAnimation>
+        </div>
+        <div className="mt-8">
+          <Testimonials />
         </div>
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
