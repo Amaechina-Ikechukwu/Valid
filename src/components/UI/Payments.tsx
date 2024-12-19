@@ -42,6 +42,7 @@ const FlutterwavePayment = ({ group }: { group: GroupDetails }) => {
   const fwConfig = {
     ...config,
     callback: (response: any) => {
+      console.log(response);
       closePaymentModal();
       router.back();
     },

@@ -16,7 +16,7 @@ if (!response.ok) {
 }
 
 const group = await response.json();
-console.log(group.data);
+
 return (
   <div className="w-full">{<ContributionHeader group={group.data} />}</div>
 );

@@ -44,7 +44,7 @@ export default function ContributionHeader({ group }: { group: GroupDetails }) {
   };
   useEffect(() => {
     if (modalPhase === "result") {
-      window.location.reload(); // Reloads the page
+      window.location.reload();
     }
   }, [modalPhase]);
 
@@ -122,18 +122,18 @@ export default function ContributionHeader({ group }: { group: GroupDetails }) {
                 Approve withdrawal by admin
               </button>
             ) : (
-              // <Link href={`${group.name}/payment`}>
-              <button
-                disabled={
-                  group.adminWithdrawal && group.adminWithdrawal.initiated
-                }
-                className="btn bg-gradient border-1 border-gray-300 w-full text-white disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Contribute Funds
-              </button>
-              // </Link>
+              <Link href={`${group.name}/payment`}>
+                <button
+                  disabled={
+                    group.adminWithdrawal && group.adminWithdrawal.initiated
+                  }
+                  className="btn bg-gradient border-1 border-gray-300 w-full text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Contribute Funds
+                </button>
+              </Link>
             )}
-            {group.adminWithdrawal == undefined &&
+            {group.adminWithdrawal == undefined ? (
               group.admin === currentUser?.uid && (
                 <button
                   className="btn border-1 border-gray-300 w-full bg-zinc-900 text-white"
@@ -141,7 +141,15 @@ export default function ContributionHeader({ group }: { group: GroupDetails }) {
                 >
                   Initiate Withdrawal Process
                 </button>
-              )}
+              )
+            ) : (
+              <button
+                className="btn border-1 border-gray-300 w-full bg-emerald-600 text-white"
+                onClick={() => router.push(`${group.name}/withdrawal`)}
+              >
+                You've been approved. Withdrawal Now
+              </button>
+            )}
           </div>
 
           {/* Modal */}
